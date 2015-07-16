@@ -1,5 +1,7 @@
 var keystone = require('keystone');
 
+// require('dotenv').load();
+
 keystone.init({
   'name': 'My Site',
 
@@ -22,12 +24,12 @@ keystone.init({
 
 require('./models');
 
-// keystone.set('locals', {
-//   _: require('lodash'),
-//   env: keystone.get('env'),
-//   utils: keystone.utils,
-//   editable: keystone.content.editable
-// });
+keystone.set('locals', {
+  _: require('lodash'),
+  env: keystone.get('env'),
+  utils: keystone.utils,
+  editable: keystone.content.editable
+});
 
 keystone.set('routes', require('./routes'));
 

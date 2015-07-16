@@ -32,8 +32,9 @@ var routes = {
 
 // Bind Routes
 exports = module.exports = function(app) {
-  app.get('/', routes.views.index);
+  app.get('/blog/:category?', routes.views.blog);
+  app.get('/blog/post/:post', routes.views.post);
 
   app.get('/api/post/list', keystone.middleware.api, routes.api.post.list);
   app.get('/api/post/pagination', keystone.middleware.api, routes.api.post.pagination);
-}
+};

@@ -1,0 +1,9 @@
+mixin post(post)
+  .post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
+    article.card.card--default(itemscope, itemtype="http://schema.org/BlogPosting")
+      a(href='/blog/post/' + post.slug, itemprop='url')
+        .card__body
+          h1(itemprop='name').card__title= post.title
+          if post.publishedDate
+            time(datetime=post.publishedDate).text-muted.text-small #{post._.publishedDate.format('MMMM Do, YYYY')}
+          p(itemprop='description')!= post.content.brief
