@@ -11,25 +11,25 @@ PostComment.add({
     type: Types.Relationship,
     initial: true,
     ref: 'User',
-    index: true
+    // index: true
   },
   post: {
     type: Types.Relationship,
     initial: true,
     ref: 'Post',
-    index: true
+    // index: true
   },
   commentState: {
     type: Types.Select,
     options: ['published', 'draft', 'archived'],
     default: 'published',
-    index: true
+    // index: true
   },
   publishOn: {
     type: Types.Date,
     default: Date.now,
     noedit: true,
-    index: true
+    // index: true
   }
 }, 'Content', {
   content: {

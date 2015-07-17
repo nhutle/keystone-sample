@@ -9,7 +9,11 @@ var Post = new keystone.List('Post', {
   },
   map: {
     name: 'title'
-  }
+  },
+  sortable: true,
+  drilldown: 'author categories',
+  searchFields: 'title, author, categories',
+  defaultSort: 'title'
 });
 
 Post.add({
@@ -19,22 +23,22 @@ Post.add({
   },
   slug: {
     type: String,
-    index: true
+    // index: true
   },
   state: {
     type: Types.Select,
     options: 'draft, published, archived',
     default: 'draft',
-    index: true
+    // index: true
   },
   author: {
     type: Types.Relationship,
     ref: 'User',
-    index: true
+    // index: true
   },
   publishedDate: {
     type: Types.Date,
-    index: true
+    // index: true
   },
   content: {
     brief: {
@@ -52,6 +56,11 @@ Post.add({
     type: Types.Relationship,
     ref: 'PostCategory',
     many: true
+  },
+  image: {
+    type: Types.CloudinaryImage,
+    publicID: 'slug',
+    folder: 'keystone/images'
   }
 });
 
@@ -79,6 +88,6 @@ Post.schema.pre('save', function(next) {
 
 Post.track = true;
 
-Post.defaultColumns = 'title, state|20%, author, publishedDate|20%';
+Post.defaultColumns = 'title, image, state|20%, author, publishedDate|20%';
 
 Post.register();

@@ -5,7 +5,9 @@ var PostCategory = new keystone.List('PostCategory', {
   autokey: {
     from: 'name',
     path: 'key'
-  }
+  },
+  label: 'Categories',
+  singular: 'Category'
 });
 
 PostCategory.add({

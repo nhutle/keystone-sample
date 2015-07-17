@@ -7,13 +7,13 @@ User.add({
   name: {
     type: Types.Name,
     required: true,
-    index: true
+    // index: true
   },
   email: {
     type: Types.Email,
     initial: true,
     required: true,
-    index: true
+    // index: true
   },
   password: {
     type: Types.Password,
@@ -32,6 +32,11 @@ User.schema.virtual('canAccessKeystone').get(function() {
 
 User.relationship({
   ref: 'Post',
+  path: 'author'
+});
+
+User.relationship({
+  ref: 'Gallery',
   path: 'author'
 });
 
