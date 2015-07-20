@@ -2,8 +2,9 @@ var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var PostComment = new keystone.List('PostComment', {
-  label: 'Comments',
-  singular: 'Comment'
+  label: 'Comment',
+  singular: 'comment',
+  plural: 'comments'
 });
 
 PostComment.add({

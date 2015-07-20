@@ -2,29 +2,33 @@ var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var Post = new keystone.List('Post', {
-  autokey: {
-    path: 'slug',
-    from: 'title',
-    unique: true
-  },
-  map: {
-    name: 'title'
-  },
-  sortable: true,
-  drilldown: 'author categories',
-  searchFields: 'title, author, categories',
-  defaultSort: 'title'
+  label: 'Post',
+  singular: 'post',
+  plural: 'posts',
+  // autokey: {
+  //   path: 'slug',
+  //   from: 'title',
+  //   unique: true
+  // },
+  // map: {
+  //   name: 'title'
+  // }
+  // sortable: true,
+  // drilldown: 'author categories',
+  // searchFields: 'title, author, categories',
+  // defaultSort: 'title'
 });
 
 Post.add({
   title: {
     type: String,
-    require: true
+    require: true,
+    initial: true
   },
-  slug: {
-    type: String,
-    // index: true
-  },
+  // slug: {
+  //   type: String,
+  //   index: true
+  // },
   state: {
     type: Types.Select,
     options: 'draft, published, archived',

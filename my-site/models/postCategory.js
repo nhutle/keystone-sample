@@ -2,18 +2,20 @@ var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var PostCategory = new keystone.List('PostCategory', {
-  autokey: {
-    from: 'name',
-    path: 'key'
-  },
-  label: 'Categories',
-  singular: 'Category'
+  label: 'Category',
+  singular: 'category',
+  plural: 'categories'
+  // autokey: {
+  //   from: 'name',
+  //   path: 'key'
+  // }
 });
 
 PostCategory.add({
   name: {
     type: String,
-    require: true
+    require: true,
+    initial: true
   }
 });
 

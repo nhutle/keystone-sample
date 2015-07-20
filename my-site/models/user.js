@@ -1,28 +1,34 @@
 var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
-var User = new keystone.List('User');
+var User = new keystone.List('User', {
+  label: 'User',
+  singular: 'user',
+  plural: 'users',
+  searchFields: 'name'
+});
 
 User.add({
   name: {
     type: Types.Name,
     required: true,
-    // index: true
+    initial: true
   },
   email: {
     type: Types.Email,
     initial: true,
     required: true,
-    // index: true
+    index: { unique: true }
   },
   password: {
     type: Types.Password,
-    initial: true
+    initial: true,
+    require: true
   }
 }, 'Permissions', {
   isAdmin: {
     type: Boolean,
-    label: 'Can access keystone'
+    label: 'Can Access Keystone'
   }
 });
 

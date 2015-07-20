@@ -3,9 +3,9 @@ var keystone = require('keystone');
 require('dotenv').load();
 
 keystone.init({
-  'name': 'My Site',
+  'name': 'My site',
 
-  'brand': 'My Brand',
+  'brand': 'My site',
 
   'favicon': 'public/favicon.ico',
   'sass': 'public',

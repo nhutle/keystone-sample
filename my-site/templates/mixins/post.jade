@@ -7,3 +7,5 @@ mixin post(post)
           if post.publishedDate
             time(datetime=post.publishedDate).text-muted.text-small #{post._.publishedDate.format('MMMM Do, YYYY')}
           p(itemprop='description')!= post.content.brief
+          p= post.author.name.first
+          p= post.author.name.last

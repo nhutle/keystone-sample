@@ -1,34 +1,85 @@
 var keystone = require('keystone'),
   Post = keystone.list('Post'),
   async = require('async'),
+  express = require('express'),
+  router = express.Router(),
   postAPI = {};
 
 /**
  * list posts
  */
-postAPI.list = function(req, res) {
-  Post.model.find(function(err, items) {
-    if (err) return res.apiError('database error', err);
+router.get('/', function(req, res) {
+  Post
+    .paginate({
+      page: req.query.page || 1,
+      perPage: req.query.perPage || 10,
+      maxPage: 1
+    })
+    .where('state', 'published')
+    .sort('-publishedAt')
+    .populate('author', 'name')
+    .populate('categories', 'name')
+    .exec(function(err, items) {
+      if (err) return res.apiError('database error', err);
 
-    res.apiResponse({
-      posts: items
+      res.apiResponse({
+        posts: items
+      });
     });
-  });
-};
+});
+
+router.get('/:id', function(req, res) {
+  Post.model
+    .findById(req.params.id)
+    .populate('author', 'name')
+    .populate('categories', 'name')
+    .exec(function(err, item) {
+      if (err) return res.apiError('database error', err);
+
+      if (!item) return res.apiError('not found');
+
+      res.apiResponse({
+        post: item
+      });
+    });
+})
+// postAPI.list = function(req, res) {
+//   Post
+//     .paginate({
+//       page: req.query.page || 1,
+//       perPage: req.query.perPage || 10,
+//       maxPage: 1
+//     })
+//     .where('state', 'published')
+//     .sort('-publishedAt')
+//     .populate('author', 'name')
+//     .populate('categories', 'name')
+//     .exec(function(err, items) {
+//       if (err) return res.apiError('database error', err);
+
+//       res.apiResponse({
+//         posts: items
+//       });
+//     });
+// };
 
 /**
  * get post by _id
  */
 postAPI.get = function(req, res) {
-  Post.model.findById(req.params.id).exec(function(err, item) {
-    if (err) return res.apiError('database error', err);
+  Post.model
+    .findById(req.params.id)
+    .populate('author', 'name')
+    .populate('categories', 'name')
+    .exec(function(err, item) {
+      if (err) return res.apiError('database error', err);
 
-    if (!item) return res.apiError('not found');
+      if (!item) return res.apiError('not found');
 
-    res.apiResponse({
-      post: item
+      res.apiResponse({
+        post: item
+      });
     });
-  });
 };
 
 /**
@@ -39,7 +90,7 @@ postAPI.create = function(req, res) {
     data = (req.method === 'POST') ? req.body : req.query;
 
   item.getUpdateHandler(req).process(data, function(err) {
-    if(err) return res.apiError('error', err);
+    if (err) return res.apiError('error', err);
 
     res.apiResponse({
       post: item
@@ -52,14 +103,14 @@ postAPI.create = function(req, res) {
  */
 postAPI.update = function(req, res) {
   Post.model.findById(req.params.id).exec(function(err, item) {
-    if(err) return res.apiError('database error', err);
+    if (err) return res.apiError('database error', err);
 
-    if(!item) return res.apiError('not found');
+    if (!item) return res.apiError('not found');
 
-    var data = (req.method === 'POST') ? req.body: req.query;
+    var data = (req.method === 'POST') ? req.body : req.query;
 
     item.getUpdateHandler(req).process(data, function(err) {
-      if(err) return res.apiError('create error', err);
+      if (err) return res.apiError('create error', err);
 
       res.apiResponse({
         post: item
@@ -73,37 +124,16 @@ postAPI.update = function(req, res) {
  */
 postAPI.remove = function(req, res) {
   Post.model.findById(req.params.id).exec(function(err, item) {
-    if(err) return res.apiError('database error', error);
+    if (err) return res.apiError('database error', error);
 
-    if(!item) return res.apiError('not found');
+    if (!item) return res.apiError('not found');
 
     item.remove(function(err) {
-      if(err) return res.apiError('database error', error);
+      if (err) return res.apiError('database error', error);
 
       res.apiResponse({
         success: true
       });
-    });
-  });
-};
-
-/**
- * get list of posts with pagination
- */
-postAPI.pagination = function(req, res) {
-  Post.paginate({
-    page: req.query.page || 1,
-    perPage: 10,
-    maxPage: 10
-  })
-  .where('state', 'published')
-  .sort('-publishedAt')
-  .populate('author')
-  .exec(function(err, items) {
-    if(err) return res.apiError('database error', err);
-
-    res.apiResponse({
-      posts: items
     });
   });
 };
@@ -114,7 +144,7 @@ postAPI.createPost = function(req, res) {
   });
 
   newPost.save(function(err) {
-    if(err) return res.apiError('database error', err);
+    if (err) return res.apiError('database error', err);
 
     res.apiResponse({
       post: newPost
@@ -124,7 +154,7 @@ postAPI.createPost = function(req, res) {
 
 postAPI.removePost = function(req, res) {
   Post.model.findById(req.params.id).remove(function(err) {
-    if(err) return res.apiError('database error', err);
+    if (err) return res.apiError('database error', err);
 
     res.apiResponse({
       success: true
@@ -132,4 +162,6 @@ postAPI.removePost = function(req, res) {
   });
 };
 
-exports = module.exports = postAPI;
+// exports = module.exports = postAPI;
+
+exports = module.exports = router;
