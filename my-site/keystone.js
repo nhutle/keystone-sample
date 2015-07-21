@@ -22,7 +22,7 @@ keystone.init({
 
   'auth': true,
 
-  'user model': 'User', // model for authentication purpose
+  'user model': 'User',
 
   'cookie secret': process.env.COOKIE_SECRET,
 

@@ -5,44 +5,26 @@ var Post = new keystone.List('Post', {
   label: 'Post',
   singular: 'post',
   plural: 'posts',
-  // autokey: {
-  //   path: 'slug',
-  //   from: 'title',
-  //   unique: true
-  // },
-  // map: {
-  //   name: 'title'
-  // }
-  // sortable: true,
-  // drilldown: 'author categories',
-  // searchFields: 'title, author, categories',
-  // defaultSort: 'title'
+  searchFields: 'name, state'
 });
 
 Post.add({
-  title: {
+  name: {
     type: String,
-    require: true,
-    initial: true
+    required: true,
+    initial: true,
   },
-  // slug: {
-  //   type: String,
-  //   index: true
-  // },
   state: {
     type: Types.Select,
     options: 'draft, published, archived',
-    default: 'draft',
-    // index: true
+    default: 'draft'
   },
   author: {
     type: Types.Relationship,
-    ref: 'User',
-    // index: true
+    ref: 'User'
   },
   publishedDate: {
-    type: Types.Date,
-    // index: true
+    type: Types.Date
   },
   content: {
     brief: {
@@ -77,9 +59,9 @@ Post.schema.virtual('content.full').get(function() {
 });
 
 Post.relationship({
-  path: 'comments',
+  path: 'postComments',
   ref: 'PostComment',
-  refPath: 'comment'
+  refPath: 'post'
 });
 
 Post.schema.pre('save', function(next) {

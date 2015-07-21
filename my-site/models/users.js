@@ -18,12 +18,14 @@ User.add({
     type: Types.Email,
     initial: true,
     required: true,
-    index: { unique: true }
+    index: {
+      unique: true
+    }
   },
   password: {
     type: Types.Password,
     initial: true,
-    require: true
+    required: true
   }
 }, 'Permissions', {
   isAdmin: {
@@ -37,13 +39,15 @@ User.schema.virtual('canAccessKeystone').get(function() {
 });
 
 User.relationship({
+  path: 'posts',
   ref: 'Post',
-  path: 'author'
+  refPath: 'author'
 });
 
 User.relationship({
+  path: 'galleries',
   ref: 'Gallery',
-  path: 'author'
+  refPath: 'author'
 });
 
 User.track = true;

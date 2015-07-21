@@ -4,24 +4,28 @@ var keystone = require('keystone'),
 var PostCategory = new keystone.List('PostCategory', {
   label: 'Category',
   singular: 'category',
-  plural: 'categories'
-  // autokey: {
-  //   from: 'name',
-  //   path: 'key'
-  // }
+  plural: 'categories',
+  search: 'name'
 });
 
 PostCategory.add({
   name: {
     type: String,
-    require: true,
+    required: true,
     initial: true
   }
 });
 
 PostCategory.relationship({
+  path: 'posts',
   ref: 'Post',
-  path: 'categories'
+  refPath: 'categories'
+});
+
+PostCategory.relationship({
+  path: 'galleries',
+  ref: 'Gallery',
+  refPath: 'categories'
 });
 
 PostCategory.track = true;

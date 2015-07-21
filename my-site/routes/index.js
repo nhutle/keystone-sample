@@ -34,10 +34,16 @@ var routes = {
 exports = module.exports = function(app) {
   // app.get('/blog/:category?', routes.views.blog);
   // app.get('/blog/post/:post', routes.views.post);
-  app.use('api/posts', keystone.middleware.api, routes.api.post);
-  // app.use('/people', people);
 
-  // app.get('/api/posts', keystone.middleware.api, routes.api.post.list);
-  // app.get('/api/posts/:id', keystone.middleware.api, routes.api.post.get);
-  // app.post('/api/posts', keystone.middleware.api, routes.api.post.create);
+  // post
+  app.get('/api/posts', keystone.middleware.api, routes.api.post.list);
+  app.post('/api/posts', keystone.middleware.api, routes.api.post.create);
+  app.get('/api/posts/:id', keystone.middleware.api, routes.api.post.get);
+  app.put('/api/posts/:id', keystone.middleware.api, routes.api.post.update);
+  app.delete('/api/posts/:id', keystone.middleware.api, routes.api.post.remove);
+
+  // comment
+  // app.
+
+
 };

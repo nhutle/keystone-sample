@@ -2,16 +2,14 @@ var keystone = require('keystone'),
   Types = keystone.Field.Types;
 
 var Gallery = new keystone.List('Gallery', {
-  autokey: {
-    from: 'name',
-    path: 'key'
-  }
+  searchFields: 'name'
 });
 
 Gallery.add({
   name: {
     type: String,
     required: true,
+    initial: true,
     note: 'This field is required.'
   },
   publishedDate: {
@@ -23,6 +21,15 @@ Gallery.add({
   },
   images: {
     type: Types.CloudinaryImages
+  },
+  author: {
+    type: Types.Relationship,
+    ref: 'User'
+  },
+  categories: {
+    type: Types.Relationship,
+    ref: 'PostCategory',
+    many: true
   }
 });
 
