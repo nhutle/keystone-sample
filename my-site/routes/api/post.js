@@ -1,7 +1,7 @@
 var keystone = require('keystone'),
+  async = require('async'),
   Post = keystone.list('Post'),
   Comment = keystone.list('PostComment'),
-  async = require('async'),
   postAPI = {};
 
 postAPI.list = function(req, res) {
@@ -28,7 +28,7 @@ postAPI.list = function(req, res) {
  * get post by _id
  */
 postAPI.get = function(req, res) {
-  asyn.waterfall([
+  async.waterfall([
     function(callback) {
       Post
         .model
@@ -36,60 +36,45 @@ postAPI.get = function(req, res) {
         .populate('author', 'name')
         .populate('categories', 'name')
         .exec(function(err, post) {
-          // if (err) return callback({
-          //   message: 'database error',
-          //   status: 500
-          // });
+          if (err) return callback({
+            message: 'database error',
+            status: 500
+          });
 
-          // if (!post) return callback({
-          //   message: 'not found',
-          //   status: 400
-          // });
+          if (!post) return callback({
+            message: 'not found',
+            status: 404
+          });
 
           callback(null, post);
         });
+    },
+    function(post, callback) {
+      Comment
+        .model
+        .find()
+        .where('post').equals(post.id)
+        .select('content -_id')
+        .exec(function(err, comment) {
+          if (err) return callback({
+            message: 'database error',
+            status: 500
+          });
+
+          post = post.toJSON();
+          post.comment = comment;
+          callback(null, post);
+        });
     }
-    // function(post, callback) {
-    //   Comment
-    //     .model
-    //     .find({
-    //       author: post.id
-    //     })
-    //     .exec(function(err, comments) {
-    //       // if (err) return callback({
-    //       //   message: 'database error',
-    //       //   status: 500
-    //       // });
+  ], function (err, result) {
+    if (err && err.status === 500) return res.apiError(err.message, err);
 
-    //       post.comments = comments;
-    //       callback(null, post);
-    //     });
-    // }
-  ], function(err, result) {
-    console.log('result-->', result);
-    // if (err.status === 500) return res.apiError('database error', err);
+    if (err && err.status === 404) return res.apiError('not found');
 
-    // if (err.status === 404) return res.apiError('not found');
-
-    // res.apiResponse({
-    //   post: result
-    // });
+    res.apiResponse({
+      post: result
+    });
   });
-
-  // Post
-  //   .model
-  //   .findById(req.params.id)
-  //   .populate('author', 'name')
-  //   .populate('categories', 'name')
-  //   .exec(function(err, item) {
-  //     if (err) return res.apiError('database error', err);
-
-  //     if (!item) return res.apiError('not found');
-
-  //     res.apiResponse({
-  //       post: item
-  //     });
-  //   });
 };
 
 /**

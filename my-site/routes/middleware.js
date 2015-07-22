@@ -2,8 +2,8 @@ var _ = require('underscore'),
   keystone = require('keystone');
 
 /**
-		Initialises the standard view locals.
-		Include anything that should be initialised before route controllers are executed.
+	Initialises the standard view locals.
+	Include anything that should be initialised before route controllers are executed.
 */
 exports.initLocals = function(req, res, next) {
   var locals = res.locals;
@@ -23,7 +23,7 @@ exports.initLocals = function(req, res, next) {
 };
 
 /**
-		Inits the error handler functions into `res`
+	Inits the error handler functions into `res`
 */
 exports.initErrorHandlers = function(req, res, next) {
   res.err = function(err, title, message) {
@@ -45,7 +45,7 @@ exports.initErrorHandlers = function(req, res, next) {
 };
 
 /**
-		Fetches and clears the flashMessages before a view is rendered
+	Fetches and clears the flashMessages before a view is rendered
 */
 exports.flashMessages = function(req, res, next) {
   var flashMessages = {
@@ -60,4 +60,14 @@ exports.flashMessages = function(req, res, next) {
   }) ? flashMessages : false;
 
   next();
+};
+
+/**
+  Prevents people from accessing protected pages when they're not signed in
+ */
+exports.isAuth = function (req, res, next) {
+  if (req.user)  return next();
+
+  req.flash('error', 'Please sign in to access this page.');
+  res.redirect('/keystone/signin');
 };

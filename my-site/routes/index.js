@@ -1,6 +1,10 @@
 var keystone = require('keystone'),
 	middleware = require('./middleware'),
-	importRoutes = keystone.importer(__dirname);
+	importRoutes = keystone.importer(__dirname),
+  routes = { // load routes
+  views: importRoutes('./views'),
+  api: importRoutes('./api')
+};
 
 // Common Middleware
 keystone.pre('routes', middleware.initErrorHandlers);
@@ -24,12 +28,6 @@ keystone.set('500', function(err, req, res, next) {
   res.err(err, title, message);
 });
 
-// Load Routes
-var routes = {
-  views: importRoutes('./views'),
-  api: importRoutes('./api')
-};
-
 // Bind Routes
 exports = module.exports = function(app) {
   // app.get('/blog/:category?', routes.views.blog);
@@ -41,9 +39,4 @@ exports = module.exports = function(app) {
   app.get('/api/posts/:id', keystone.middleware.api, routes.api.post.get);
   app.put('/api/posts/:id', keystone.middleware.api, routes.api.post.update);
   app.delete('/api/posts/:id', keystone.middleware.api, routes.api.post.remove);
-
-  // comment
-  // app.
-
-
 };
