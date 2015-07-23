@@ -5,7 +5,12 @@ var Post = new keystone.List('Post', {
   label: 'Post',
   singular: 'post',
   plural: 'posts',
-  searchFields: 'name, state'
+  searchFields: 'name, state',
+  autokey: {
+    from: 'name',
+    path: 'key',
+    unique: true
+  }
 });
 
 Post.add({
