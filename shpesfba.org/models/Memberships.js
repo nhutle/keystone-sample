@@ -1,5 +1,5 @@
 var keystone = require('keystone'),
-    Types = keystone.Field.Types;
+  Types = keystone.Field.Types;
 
 /**
  * Membership Model
@@ -8,7 +8,9 @@ var Membership = new keystone.List('Membership');
 
 Membership.add({
   title: {
-    type: Types.Text
+    type: Types.Text,
+    require: true,
+    initial: true
   },
   price: {
     type: Types.Text
@@ -19,8 +21,9 @@ Membership.add({
   }
 });
 
+Membership.defaultColumns = 'title, body, price';
+
 /**
  * Registration
  */
-Membership.defaultColumns = 'title, body, price';
 Membership.register();

@@ -1,0 +1,46 @@
+footer.site-footer.container-fluid(role='footer')
+  //- FOOTER
+  .section.row
+    .col-sm-4.col-sm-offset-1.footer-about
+      if about
+        h3 #{about.title}
+        != about.body
+      br
+      .btn-group-vertical
+        a(href="SFBA-SHPE-Chapter-Bylaws.pdf" role='button').btn.btn-default.footer-btn_style Our Bylaws
+        a(target='_blank' href='http://www.shpe.org/' role='button').btn.btn-default.footer-btn_style SHPE Inc
+        a(target='_blank' href='http://www.shpefoundation.org/' role='button').btn.btn-default.footer-btn_style SHPE Foundation
+        a(target='_blank' href='http://www.facebook.com/groups/120819351271743' role='button').btn.btn-default.footer-btn_style Join us on Facebook
+    .col-sm-3
+      h3 Latest News
+      if events && events.length > 3
+        - var n = 0
+          while n < 4
+            a(target='_blank' href='https://www.facebook.com/events/') #{events[n].FBEventName}
+            unless (n === 3)
+              hr
+            - n++
+    .col-sm-3
+      h3 Contact Us
+      form#contactForm(role='form' method='post' name='footer-contact' action='/contact-general')
+        .form-group
+          input.form-control(type="text" required name="name" placeholder="Name")
+        .form-group
+          input.form-control(type="email" required name="email" placeholder="Email")
+        .form-group
+          textarea.form-control(required name="message" placeholder="Message" rows=4)
+        .form-group.honeypot
+          label.honeypot Are you a robot?
+          input.honeypot(type="text" name="honeypot" alt="If you fill this field out then your email will not be sent")
+
+        button.btn.btn-default.footer-btn.spanfix(type="submit")
+          span &gt;
+          | Send
+    .row
+      .col-sm-10.col-sm-offset-1
+        span Made with love by
+        a(target='_blank' href='http://the.r3dm.com')  The R3DM &#0169;
+        span  using
+        a(target='_blank' href='http://nodejs.org')  Node.js &#0169;
+        span  and
+        a(target='_blank' href='http://keystonejs.com')  Keystone.js &#0169;

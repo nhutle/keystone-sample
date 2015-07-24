@@ -1,44 +1,50 @@
-// Simulate config options from your production environment by
-// customising the .env file in your project's root folder.
+var keystone = require('keystone'),
+  _ = require('underscore');
+
 require('dotenv').load();
 
-// Require keystone
-var keystone = require('keystone');
-
-// Initialise Keystone with your project's configuration.
-// See http://keystonejs.com/guide/config for available options
-// and documentation.
 keystone.init({
-	'name': 'shpesfba.org',
-	'brand': 'shpesfba.org',
+  name: 'shpesfba.org',
+  brand: 'shpesfba.org',
 
-	'sass': 'public',
-	'static': 'public',
-	'favicon': 'public/favicon.ico',
-	'views': 'templates/views',
-	'view engine': 'jade',
+  static: 'public',
+  sass: 'public',
+  favicon: 'public/favicon.ico',
+  views: 'templates/views',
+  'view engine': 'jade',
 
-	'auto update': true,
-	'session': true,
-	'auth': true,
-	'user model': 'User',
-	'cookie secret': 'nf%c+UDN6Ecd!.7_rX~~bpK<7"hmDN>vm6iP>X0fTGiv9a9bFEPLLQ(OBXPsv1f;'
+  'auto update': true,
+
+  session: true,
+  'session store': 'connect-mongo',
+
+  auth: true,
+  'user model': 'User',
+
+  compress: true,
+
+  'mongo': process.env.MONGO_URI,
+
+  'cloudinary config': process.env.CLOUDINARY_URL,
+  'cloudinary prefix': process.env.CLOUDINARY_PREFIX,
+
+  'embedly api key': process.env.EMBEDLY_APIKEY,
+
+  'mandrill api key': process.env.MANDRILL_APIKEY,
+  'mandrill username': process.env.MANDRILL_USERNAME,
+
+  'cookie secret': 'nf%c+UDN6Ecd!.7_rX~~bpK<7"hmDN>vm6iP>X0fTGiv9a9bFEPLLQ(OBXPsv1f;'
 });
 
-// Load your project's Models
 keystone.import('models');
 
-// Setup common locals for your templates. The following are required for the
-// bundled templates and layouts. Any runtime locals (that should be set uniquely
-// for each request) should be added to ./routes/middleware.js
 keystone.set('locals', {
-	_: require('underscore'),
-	env: keystone.get('env'),
-	utils: keystone.utils,
-	editable: keystone.content.editable
+  _: _,
+  env: keystone.get('env'),
+  utils: keystone.utils,
+  editable: keystone.content.editable
 });
 
-// Load your project's Routes
 keystone.set('routes', require('./routes'));
 
 // Setup common locals for your emails. The following are required by Keystone's
@@ -46,8 +52,7 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'users': 'users'
+  'users': 'users'
 });
 
-// Start Keystone to connect to your database and initialise the web server
 keystone.start();

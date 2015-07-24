@@ -53,8 +53,9 @@ Job.add({
   }
 });
 
+Job.defaultColumns = 'title, createdAt, expirationDate';
+
 /**
  * Registration
  */
-Job.defaultColumns = 'title, createdAt, expirationDate';
 Job.register();

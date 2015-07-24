@@ -28,8 +28,9 @@ Officer.add({
   }
 });
 
+Officer.defaultColumns = 'name';
+
 /**
  * Registration
  */
-Officer.defaultColumns = 'name';
 Officer.register();

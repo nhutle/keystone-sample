@@ -19,16 +19,14 @@
  */
 var keystone = require('keystone'),
     middleware = require('./middleware'),
-    importRoutes = keystone.importer(__dirname);
+    importRoutes = keystone.importer(__dirname),
+    routes = { // Import Route Controllers
+      views: importRoutes('./views')
+    };
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
-
-// Import Route Controllers
-var routes = {
-  views: importRoutes('./views')
-};
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
@@ -38,7 +36,7 @@ exports = module.exports = function(app) {
   // app.get('/gallery/:album', routes.views.album);
   // app.get('/excutive-board', routes.views.contact);
   // app.get('/chapter-history', routes.views.history);
-  // app.get('/membership', routes.views.membership);
+  app.get('/membership', routes.views.membership);
   // app.get('/jobs', routes.views.jobs);
   // app.get('/jobs/new', routes.views.jobForm);
   // app.post('/jobs/new', routes.views.jobValidate, routes.views.jobForm);

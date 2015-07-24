@@ -1,23 +1,67 @@
 extends ../layouts/default
 
 block content
-	.container: .jumbotron
-		img(src='/images/logo.svg', width='160')
-		h1 Welcome
-		p This is your new <a href='http://keystonejs.com', target='_blank'>KeystoneJS</a> website.
-		p It includes the latest versions of
-			| <a href='http://getbootstrap.com/' target='_blank'>Bootstrap</a>
-			| and <a href='http://www.jquery.com/' target='_blank'>jQuery</a>.
-		p Visit the <a href='http://keystonejs.com/guide' target='_blank'>Getting Started</a> guide to learn how to customise it.
-		hr
-		if user && user.canAccessKeystone
-			p
-				a(href='/keystone').btn.btn-lg.btn-primary Open the Admin UI
-		else
-			p We have created a default Admin user for you with the email <strong>admin@keystonejs.com</strong> and the password <strong>admin</strong>.
-			p
-				a(href='/keystone/signin', style='margin-right: 10px').btn.btn-lg.btn-primary Sign in
-				|  to use the Admin UI.
-		hr
-		p Remember to <a href='https://github.com/keystonejs/keystone' target='_blank'>Star KeystoneJS on GitHub</a> and
-			| <a href='https://twitter.com/keystonejs' target='_blank'>follow @keystonejs</a> on twitter for updates.
+  .headline-parallax
+    .headline_container-parallax(data-type='background' data-speed='15')
+      h1.headline_text-parallax
+        | San Francisco Bay Area
+        br
+        | Society of Hispanic Professional Engineers
+  .section_bio.section
+    .inner-container
+      .carousel-copy
+        if copies
+          for copy in copies
+            div
+              h2.section_title #{copy.title}
+              != copy.body
+  .section_upcoming.section
+    .inner-container
+      h2.section_title Upcoming Events
+      .carousel-upcoming
+        if events
+          - var currentTime = Date.now()
+          - var noEventsP = true
+          for event in events
+            if event.startTime && currentTime - event.startTime.getTime() < 605000000
+              - noEventsP = false
+              div
+                if event.coverPhoto.url
+                  div(alt='event photo', style='background: url(#{event.coverPhoto.url}); background-position: center; background-size: cover; ')
+                else
+                  img(alt='shpe logo', src='https://s3-us-west-1.amazonaws.com/shpesf/new_shpe_logo_color.jpg')
+                a(target='_blank' href='https://www.facebook.com/events/' + event.FBEventId)
+                  button.btn.btn-rsvp
+                    | Info
+                    span.glyphicon.glyphicon-chevron-right(style="vertical-align:-1px")
+                br
+                h3 #{event.FBEventName}
+                = getDate(event.startTime)
+                br
+                = getStartTime(event.startTime)
+                | -
+                = getEndTime(event.endTime)
+          if noEventsP
+            h4.no-upcoming There are no upcoming events
+
+  .membership_section.section
+    .inner-container
+      h2.section_title Membership
+      p
+        | Membership is open to all individuals who believe in the mission and goals set forth by the organization.
+        | SF Bay Area SHPE does not discriminate based on occupation, ethnicity, or any other classification.
+        | The chapter welcomes individuals and corporations alike to join together to fufill the mission and goals of
+        | SF Bay Area SHPE.
+      .membership_button-center.row
+        .col-sm-2
+        .col-sm-4
+          a(href='/membership')
+            button.btn.btn-primary.spanfix.btn-block
+              span &gt;
+              | Learn More
+        .col-sm-4
+          a(href='http://national.shpe.org/index.php/membership')
+            button.btn.btn-primary.membership_button-secondPadding.spanfix.btn-block
+              span &gt;
+              | Apply Now
+        .col-sm-2

@@ -1,5 +1,5 @@
 var keystone = require('keystone'),
-  Type = keystone.Field.Types;
+  Types = keystone.Field.Types;
 
 /**
  * Gallery Model
@@ -29,8 +29,9 @@ Gallery.add({
   }
 });
 
+Gallery.defaultColumns = 'name, publishedDate, heroImage, images';
+
 /**
  * Registration
  */
-Gallery.defaultColumns = 'name, publishedDate, heroImage, images';
 Gallery.register();

@@ -46,8 +46,9 @@ User.relationship({
   refPath: 'author'
 });
 
+User.defaultColumns = 'name, email, isAdmin';
+
 /**
  * Registration
  */
-User.defaultColumns = 'name, email, isAdmin';
 User.register();
