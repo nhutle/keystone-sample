@@ -20,7 +20,9 @@ Job.add({
   requirements: {
     type: Types.Textarea
   },
-
+  about: {
+    type: Types.Textarea
+  },
   companyName: {
     type: Types.Text
   },

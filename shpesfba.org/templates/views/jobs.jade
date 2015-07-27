@@ -1,0 +1,39 @@
+extends ../layouts/default
+
+block intro
+  .headline-min
+    .headline_container_left
+      .headline_container_right
+        .section.container
+  .container
+    h1 Job Listings
+
+block content
+  .container-fluid
+    .row
+      section.col-sm-7.col-sm-offset-2.job-list.col-lg-6.col-lg-offset-3
+        if jobs
+          each job in jobs
+            if job.approved
+              .job-post
+                h3
+                  a(href="/jobs/" + job.id) #{job.title}
+                p
+                  strong
+                    a(target='_blank' href="#{job.companyUrl}") #{job.companyName}
+                    br
+                  | #{job.location.suburb} #{job.location.state}
+                  if job.relocationOffered
+                    i (relocation offered)
+                a.email(href='mailto:' + job.email)
+                  span.glyphicon.glyphicon-envelope.font-lg
+                  | #{job.email}
+                br
+        else
+          h3 No jobs listed
+      .col-md-3.hidden-xs.hidden-sm
+        .panel.panel-default
+          .panel-heading.jobs-panel
+            h3.panel-title Employers!
+          .panel-body.center-block
+            a.btn.btn-primary.btn-block(href="/jobs/new") List your jobs now!

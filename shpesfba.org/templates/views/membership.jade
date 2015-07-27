@@ -15,9 +15,9 @@ block content
           .head= membership.title
             |  Member
             span= membership.price
-          div
+          .clearfix
             .visible-xs-block
-              button.btn.btn-primary.spanfix.btn-block(type='button', data-toggle='modal', data-target='#' + membership.title.replace(/[\W]/g, '_') +'Modal')
+              button.btn.btn-primary.spanfix.btn-block(type="button", data-toggle="modal", data-target="#" + membership.title.replace(/[\W]/g, "_") + "Modal")
                 span &gt;
                 | Learn More
               button.btn.btn-primary.spanfix.btn-block

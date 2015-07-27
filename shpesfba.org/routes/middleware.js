@@ -1,5 +1,6 @@
 var _ = require('underscore'),
   keystone = require('keystone'),
+  moment = require('moment'),
   Event = keystone.list('Event'),
   Footer = keystone.list('Footer');
 
@@ -14,8 +15,23 @@ exports.initLocals = function(req, res, next) {
     label: 'Membership',
     key: 'membership',
     href: '/membership'
+  }, {
+    label: 'Jobs',
+    key: 'jobs',
+    href: '/jobs'
   }];
+
   locals.user = req.user;
+
+  locals.getStartTime = function(date) {
+    return moment(date).format('h:mma');
+  };
+  locals.getEndTime = function(date) {
+    return moment(date).format('h:mma');
+  };
+  locals.getDate = function(date) {
+    return moment(date).format('MMMM D, YYYY');
+  };
 
   next();
 };

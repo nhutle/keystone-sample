@@ -37,10 +37,10 @@ exports = module.exports = function(app) {
   // app.get('/excutive-board', routes.views.contact);
   // app.get('/chapter-history', routes.views.history);
   app.get('/membership', routes.views.membership);
-  // app.get('/jobs', routes.views.jobs);
+  app.get('/jobs', routes.views.jobs);
+  app.get('/jobs/:job', routes.views.job);
   // app.get('/jobs/new', routes.views.jobForm);
   // app.post('/jobs/new', routes.views.jobValidate, routes.views.jobForm);
-  // app.get('/jobs/:job', routes.views.job);
 
   // app.get('/sitemap.xml', function(req, res) {
   //  sitemap.toXML(function(xml) {
