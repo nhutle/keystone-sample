@@ -18,11 +18,12 @@
  * http://expressjs.com/api.html#app.VERB
  */
 var keystone = require('keystone'),
-    middleware = require('./middleware'),
-    importRoutes = keystone.importer(__dirname),
-    routes = { // Import Route Controllers
-      views: importRoutes('./views')
-    };
+  middleware = require('./middleware'),
+  importRoutes = keystone.importer(__dirname),
+  routes = { // Import Route Controllers
+    views: importRoutes('./views'),
+    emails: importRoutes('./emails')
+  };
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -32,13 +33,18 @@ keystone.pre('render', middleware.flashMessages);
 exports = module.exports = function(app) {
   // Views
   app.get('/', routes.views.index);
-  // app.get('/gallery', routes.views.gallery);
-  // app.get('/gallery/:album', routes.views.album);
-  // app.get('/excutive-board', routes.views.contact);
-  // app.get('/chapter-history', routes.views.history);
   app.get('/membership', routes.views.membership);
   app.get('/jobs', routes.views.jobs);
   app.get('/jobs/:job', routes.views.job);
+  app.get('/gallery', routes.views.gallery);
+  app.get('/gallery/:album', routes.views.album);
+  app.get('/executive-board', routes.views.executiveBoard);
+  app.get('/chapter-history', routes.views.history);
+
+  app.post('/contact-general',
+    routes.emails.contactValidation,
+    routes.emails.contactGeneral
+  );
   // app.get('/jobs/new', routes.views.jobForm);
   // app.post('/jobs/new', routes.views.jobValidate, routes.views.jobForm);
 
@@ -48,11 +54,6 @@ exports = module.exports = function(app) {
   //    res.send(xml);
   //  });
   // });
-
-  // app.post('/contact-general',
-  //  routes,emails.contactValidation,
-  //  routes.emails.contactGeneral
-  // );
 
   // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
   // app.get('/protected', middleware.requireUser, routes.views.protected);

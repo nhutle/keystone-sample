@@ -4154,6 +4154,8 @@ tbody.collapse.in {
   .navbar-nav > li > a {
     padding-top: 62.5px;
     padding-bottom: 62.5px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 .navbar-form {
@@ -6955,10 +6957,10 @@ a.navigation {
   float: left;
   height: 100%;
   text-align: center;
-  -webkit-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
-     -moz-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
-      -ms-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
-       -o-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+  -webkit-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+     -moz-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      -ms-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+       -o-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
           transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 .blueimp-gallery,

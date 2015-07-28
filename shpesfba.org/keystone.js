@@ -27,6 +27,8 @@ keystone.init({
 
   'cloudinary config': process.env.CLOUDINARY_URL,
   'cloudinary prefix': process.env.CLOUDINARY_PREFIX,
+  'cloudinary folders': true,
+  'cloudinary prefix': 'shpesfba.org',
 
   'embedly api key': process.env.EMBEDLY_APIKEY,
 
