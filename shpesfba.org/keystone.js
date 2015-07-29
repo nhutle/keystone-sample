@@ -30,10 +30,11 @@ keystone.init({
   'cloudinary folders': true,
   'cloudinary prefix': 'shpesfba.org',
 
-  'embedly api key': process.env.EMBEDLY_APIKEY,
+  // 'embedly api key': process.env.EMBEDLY_APIKEY,
 
   'mandrill api key': process.env.MANDRILL_APIKEY,
   'mandrill username': process.env.MANDRILL_USERNAME,
+  emails: 'templates/emails',
 
   'cookie secret': 'nf%c+UDN6Ecd!.7_rX~~bpK<7"hmDN>vm6iP>X0fTGiv9a9bFEPLLQ(OBXPsv1f;'
 });
@@ -51,6 +52,20 @@ keystone.set('routes', require('./routes'));
 
 // Setup common locals for your emails. The following are required by Keystone's
 // default email templates, you may remove them if you're using your own.
+keystone.set('email locals', {
+  logoSrc: '/images/logo-email.gif',
+  logoWidth: 194,
+  logoHeight: 76,
+  theme: {
+    emailBg: '#f9f9f9',
+    linkColor: '#2697de',
+    buttons: {
+      color: '#fff',
+      backgroundColor: '#2697de',
+      borderColor: '#1a7cb7'
+    }
+  }
+});
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {

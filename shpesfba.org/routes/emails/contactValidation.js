@@ -1,15 +1,17 @@
-var form = require('express-form'),
-  field = form.field;
+var form = require('express-form');
 
 module.exports = form(
-  field('name')
-    .trim()
-    .required(),
-  field('email')
-    .trim()
+  form
+    .field('name')
     .required()
-    .isEmail,
-  field('message')
-    .trim()
+    .trim(),
+  form
+    .field('email')
     .required()
+    .trim()
+    .isEmail(),
+  form
+    .field('message')
+    .required()
+    .trim()
 );
